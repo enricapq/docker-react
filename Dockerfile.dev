@@ -1,0 +1,17 @@
+# BUILD specifying file: docker build -f Dockerfile.dev .
+# and RUN: docker run -p 3000:3000 <image_id>
+# or docker run -it <image_id> npm run test
+
+# To run test from running docker-compose instance: docker exec -it <running_container> npr run test
+
+
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY package.json .
+RUN npm install
+
+COPY . .
+
+CMD ["npm", "run", "start"]

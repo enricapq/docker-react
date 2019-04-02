@@ -1,0 +1,25 @@
+version: '3'
+services:
+  # 1st container for web app
+  web:
+    build:
+      # context specify where we want the files and folder come from
+      context: .
+      #look in current dir
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # - represents an array
+      - /app/node_modules
+      - .:/app
+  # 2nd container for the test (can't enter in the container)
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    # override starting command instead of npm run start from Dockerfile.dev
+    command: ["npm", "run", "test"]
