@@ -12,5 +12,7 @@ RUN npm run build
 
 # 2nd run phase
 FROM nginx
+# expose 80 for elastic beanstalk as use this port for incoming traffic
+EXPOSE 80
 # copy from a different phase specifying also the folder to copy and move in a static folder /html
 COPY --from=builder /app/build /usr/share/nginx/html
