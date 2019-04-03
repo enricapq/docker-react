@@ -8,3 +8,20 @@ before_install:
 
 script:
   - docker run enricapq/docker-react npm run test -- --coverage
+
+deploy:
+  # travis CI comes preconfigured to deploy app on different providers
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "docker-react"
+  env: "DockerReact-env"
+  # TCI zip all files in the repo and copy it in S3 (automatically generated with Elastic Beanstalk)
+  bucket_name: "elasticbeanstalk-us-east-2-259029074086"
+  # bucket_path like the app name
+  bucket_path: "docker-react"
+  on:
+    # anytime push to branch master, then deploy
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
